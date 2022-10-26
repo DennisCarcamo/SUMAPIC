@@ -5,12 +5,21 @@ import BootstrapStyleSheet from 'react-native-bootstrap-styles';
 const bootstrapStyleSheet = new BootstrapStyleSheet();
 const { styles: s, constants: c } = bootstrapStyleSheet;
 
-function LandingScreen() {
+function LandingScreen({ navigation }) {
+
+    function goToTakePicture() {
+        navigation.navigate('Take');
+    }
+
+    function goToDisplayPicture() {
+        navigation.navigate('Display');
+    }
+
     return (<View style={styles.ScreenContainer}>
-        <Pressable style={styles.button}>
+        <Pressable style={styles.button} onPress={goToTakePicture}>
             <Text style={[s.text, s.title, styles.buttonText]}>Take New Picture</Text>
         </Pressable>
-        <Pressable style={styles.button}>
+        <Pressable style={styles.button} onPress={goToDisplayPicture}>
             <Text style={[s.text, s.title, styles.buttonText]}>Load Picture From Galery</Text>
         </Pressable>
     </View>);
