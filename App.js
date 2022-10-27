@@ -14,7 +14,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name='Home' component={LandingScreen}></Stack.Screen>
-          <Stack.Screen name='Take' component={TakePictureScreen}></Stack.Screen>
+          <Stack.Screen name='Take' component={TakePictureScreen} options={{ unmountOnBlur: true }}></Stack.Screen>
           <Stack.Screen name='Display' component={DisplayPictureScreen}></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
