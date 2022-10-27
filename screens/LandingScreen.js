@@ -1,4 +1,5 @@
 import { View, StyleSheet, Text, Pressable } from 'react-native';
+import BatteryAndInternetStatusComponent from '../components/BatteryAndInternetStatus';
 
 import BootstrapStyleSheet from 'react-native-bootstrap-styles';
 
@@ -15,14 +16,19 @@ function LandingScreen({ navigation }) {
         navigation.navigate('Display');
     }
 
-    return (<View style={styles.ScreenContainer}>
-        <Pressable style={styles.button} onPress={goToTakePicture}>
-            <Text style={[s.text, s.title, styles.buttonText]}>Take New Picture</Text>
-        </Pressable>
-        <Pressable style={styles.button} onPress={goToDisplayPicture}>
-            <Text style={[s.text, s.title, styles.buttonText]}>Load Picture From Galery</Text>
-        </Pressable>
-    </View>);
+    return (
+
+        <View style={styles.ScreenContainer}>
+            <BatteryAndInternetStatusComponent></BatteryAndInternetStatusComponent>
+            <Pressable style={styles.button} onPress={goToTakePicture}>
+                <Text style={[s.text, s.title, styles.buttonText]}>Take New Picture</Text>
+            </Pressable>
+            <Pressable style={styles.button} onPress={goToDisplayPicture}>
+                <Text style={[s.text, s.title, styles.buttonText]}>Load Picture From Galery</Text>
+            </Pressable>
+        </View>
+
+    );
 }
 
 export default LandingScreen;
