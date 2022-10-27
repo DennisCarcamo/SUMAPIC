@@ -19,7 +19,7 @@ function LandingScreen({ navigation }) {
     return (
 
         <View style={styles.ScreenContainer}>
-            <BatteryAndInternetStatusComponent></BatteryAndInternetStatusComponent>
+            <BatteryAndInternetStatusComponent key={Math.random()}></BatteryAndInternetStatusComponent>
             <Pressable style={styles.button} onPress={goToTakePicture}>
                 <Text style={[s.text, s.title, styles.buttonText]}>Take New Picture</Text>
             </Pressable>
