@@ -1,0 +1,22 @@
+## SUMAPIC
+```
+    useEffect(() => {
+      console.log("se ejecuta siempre, despues de pintar");
+    });
+  
+    useEffect(() => {
+      console.log("componentDidUpdate - increment, solo se ejecuta si la dependencia cambia");
+    }, [increment]);
+  
+    useEffect(() => {
+      console.log("componentDidUpdate - decrement, solo se ejecuta si la dependencia cambia");
+    }, [decrement]);
+  
+   useEffect(() => {
+    return () => {
+      console.log("Component unmounted, se retorna una funcion");
+    };
+   }, []);
+
+```
+

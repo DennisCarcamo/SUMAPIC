@@ -21,17 +21,17 @@ function LandingScreen({ navigation }) {
   }
 
   return (
-
-    <View style={styles.ScreenContainer}>
-      <BatteryAndInternetStatusComponent></BatteryAndInternetStatusComponent>
-      <Pressable style={styles.button} onPress={goToTakePicture}>
-        <Text style={styles.buttonText}>Take New Picture</Text>
-      </Pressable>
-      <Pressable style={styles.button} onPress={loadPictureFromGalery}>
-        <Text style={styles.buttonText} >Load Picture From Galery</Text>
-      </Pressable>
-    </View>
-
+    <>
+      <View style={styles.ScreenContainer}>
+        <BatteryAndInternetStatusComponent></BatteryAndInternetStatusComponent>
+        <Pressable style={styles.button} onPress={goToTakePicture}>
+          <Text style={styles.buttonText}>Take New Picture</Text>
+        </Pressable>
+        <Pressable style={styles.button} onPress={loadPictureFromGalery}>
+          <Text style={styles.buttonText} >Load Picture From Galery</Text>
+        </Pressable>
+      </View>
+    </>
   );
 }
 
@@ -39,6 +39,7 @@ export default LandingScreen;
 
 const styles = StyleSheet.create({
   ScreenContainer: {
+    padding: 32,
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',

@@ -4,11 +4,6 @@ import { useIsFocused } from '@react-navigation/native';
 import { Camera, CameraType } from 'expo-camera';
 import BatteryAndInternetStatusComponent from "../components/BatteryAndInternetStatus";
 
-import BootstrapStyleSheet from 'react-native-bootstrap-styles';
-
-const bootstrapStyleSheet = new BootstrapStyleSheet();
-const { styles: s, constants: c } = bootstrapStyleSheet;
-
 function TakePictureScreen({ navigation }) {
 
   const [type, setType] = useState(CameraType.back);
@@ -19,13 +14,26 @@ function TakePictureScreen({ navigation }) {
   const isFocused = useIsFocused();
   const cameraRef = useRef();
 
+  useEffect(() => {
+    async function getCammeraPermission() {
+      const permission = await Camera.requestCameraPermissionsAsync();
+      setcameraPermission(permission);
+    }
+    getCammeraPermission();
+  }, []);
+
   function toggleCameraType() {
     setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
   }
 
-  const onCameraReady = () => {
+  function onCameraReady() {
     setIsCameraReady(true);
   };
+
+  function goToDisplayPicture() {
+    setCapturedPicture(null);
+    navigation.navigate('Display', { capturedPicture, description: 'Taken From Camera', hideSave: false });
+  }
 
   async function takePicture() {
     if (cameraRef.current) {
@@ -44,40 +52,8 @@ function TakePictureScreen({ navigation }) {
     await cameraRef.current.resumePreview();
   }
 
-  function goToDisplayPicture() {
-    setCapturedPicture(null);
-    navigation.navigate('Display', { capturedPicture, description: 'Taken From Camera', hideSave: false });
-  }
-
-  useEffect(() => {
-    async function getCammeraPermission() {
-      const permission = await Camera.requestCameraPermissionsAsync();
-      setcameraPermission(permission);
-    }
-    getCammeraPermission();
-  }, []);
-  //
-  //   useEffect(() => {
-  //     console.log("se ejecuta siempre, despues de pintar");
-  //   });
-  //
-  //   useEffect(() => {
-  //     console.log("componentDidUpdate - increment, solo se ejecuta si la dependencia cambia");
-  //   }, [increment]);
-  //
-  //   useEffect(() => {
-  //     console.log("componentDidUpdate - decrement, solo se ejecuta si la dependencia cambia");
-  //   }, [decrement]);
-  //
-  //  useEffect(() => {
-  //   return () => {
-  //     console.log("Component unmounted, se retorna una funcion");
-  //   };
-  //  }, []);
-
   return (
     <>
-
       {
         isFocused && <View style={styles.screenContainer}>
           <View style={styles.headingContainer}>
@@ -86,7 +62,7 @@ function TakePictureScreen({ navigation }) {
               {
                 capturedPicture != null
                   ? <Pressable style={styles.button} onPress={clearPicture} >
-                    <Text style={[s.text, s.title, styles.buttonText]}>Clear</Text>
+                    <Text style={styles.buttonText}>Clear</Text>
                   </Pressable>
                   : null
 
@@ -97,16 +73,16 @@ function TakePictureScreen({ navigation }) {
 
           </Camera>
           <View style={styles.pictureActionsContainer}>
-            <Pressable style={styles.button} onPress={toggleCameraType}>
-              <Text style={[s.text, s.title, styles.buttonText]}>Flip</Text>
-            </Pressable>
             <Pressable style={styles.button} onPress={takePicture}>
-              <Text style={[s.text, s.title, styles.buttonText]}>Take Picture</Text>
+              <Text style={styles.buttonText}>Take Picture</Text>
+            </Pressable>
+            <Pressable style={styles.button} onPress={toggleCameraType}>
+              <Text style={styles.buttonText}>Flip</Text>
             </Pressable>
             {
               capturedPicture != null
                 ? <Pressable style={[styles.button, styles.actionButton]} disabled={capturedPicture == null} onPress={goToDisplayPicture}>
-                  <Text style={[s.text, s.title, styles.buttonText]}>Next</Text>
+                  <Text style={styles.buttonText}>Next</Text>
                 </Pressable>
                 : null
             }
@@ -123,11 +99,11 @@ const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
     backgroundColor: '#f3e5f5',
+    padding: 32,
   },
   headingContainer: {
     flex: 2,
-    marginHorizontal: 32,
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: 'space-between'
   },
   headingCameraContainer: {
@@ -138,20 +114,18 @@ const styles = StyleSheet.create({
   },
   pictureFrameContainer: {
     flex: 5,
-    marginVertical: 32,
-    marginHorizontal: 32,
+    marginVertical: 12,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    // borderWidth: 3,
+    borderWidth: 3,
     backgroundColor: '#8e24aa',
-    // borderColor: 'black',
+    borderColor: '#5e35b1',
   },
   pictureActionsContainer: {
     flex: 0.5,
     marginTop: 0,
     marginBottom: 32,
-    marginHorizontal: 32,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -164,8 +138,6 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    Width: '20%',
-    Height: '20%',
     paddingVertical: 12,
     paddingHorizontal: 32,
     borderRadius: 4,

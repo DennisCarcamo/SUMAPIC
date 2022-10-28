@@ -11,7 +11,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <>
-      <NavigationContainer>
+      <NavigationContainer styles={styles.container}>
         <Stack.Navigator>
           <Stack.Screen name='Home' component={LandingScreen}></Stack.Screen>
           <Stack.Screen name='Take' component={TakePictureScreen}></Stack.Screen>
@@ -25,7 +25,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
   },
