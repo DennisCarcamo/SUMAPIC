@@ -46,7 +46,7 @@ function TakePictureScreen({ navigation }) {
 
   function goToDisplayPicture() {
     setCapturedPicture(null);
-    navigation.navigate('Display', { capturedPicture });
+    navigation.navigate('Display', { capturedPicture, description: 'Taken From Camera', hideSave: false });
   }
 
   useEffect(() => {

@@ -94,7 +94,7 @@ export default class BatteryAndInternetStatusComponent extends React.Component {
 
 const styles = StyleSheet.create({
     mainContainer: {
-        backgroundColor: '#4a148c',
+        backgroundColor: '#E5989B',
         marginTop: '0%',
         minHeight: '20%',
         maxWidth: '40%',
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     label: {
-        color: 'white',
+        color: 'black',
         fontWeight: '700',
         padding: 18,
     }
