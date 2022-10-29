@@ -39,7 +39,7 @@ function TakePictureScreen({ navigation }) {
     if (cameraRef.current) {
       const options = { quality: 0.5, base64: true, skipProcessing: true };
       const data = await cameraRef.current.takePictureAsync(options);
-      const source = data.uri
+      const source = data
       if (source) {
         setCapturedPicture(source);
         await cameraRef.current.pausePreview();
@@ -125,7 +125,6 @@ const styles = StyleSheet.create({
   pictureActionsContainer: {
     flex: 0.5,
     marginTop: 0,
-    marginBottom: 32,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

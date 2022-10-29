@@ -12,11 +12,10 @@ function LandingScreen({ navigation }) {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: false,
-      aspect: [4, 3],
-      quality: 1,
+      base64: true
     });
     if (!result.cancelled) {
-      navigation.navigate('Display', { capturedPicture: result.uri, description: 'Loaded from Galery', hideSave: true });
+      navigation.navigate('Display', { capturedPicture: result, description: 'Loaded from Galery', hideSave: true });
     }
   }
 

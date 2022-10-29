@@ -24,7 +24,7 @@ function DisplayPictureScreen({ navigation, route }) {
   }
 
   async function savePicture() {
-    const asset = await MediaLibrary.createAssetAsync(capturedPicture);
+    const asset = await MediaLibrary.createAssetAsync(capturedPicture.uri);
     if (asset) {
       await MediaLibrary.createAlbumAsync('Sumapic', asset);
     }
@@ -34,19 +34,17 @@ function DisplayPictureScreen({ navigation, route }) {
     setRequestResponse('Sending...');
 
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Basic YWNjX2YwNzM5NzBhZmQyM2UzYjpjMWUyNTE4Zjc2ZjVjZjRmYjUyMzVmYzY5YzA2Y2E1Ng==");
-
-    var formdata = new FormData();
-    formdata.append("image", capturedPicture);
+    myHeaders.append("Authorization", "Bearer public_W142hWLAiFiKDaAZb9ErjvXvsZpa");
+    myHeaders.append("Content-Type", "image/jpg");
 
     var requestOptions = {
       method: 'POST',
       headers: myHeaders,
-      body: formdata,
+      body: capturedPicture,
       redirect: 'follow'
     };
 
-    fetch("https://api.imagga.com/v2/tags", requestOptions)
+    fetch("https://api.upload.io/v2/accounts/W142hWL/uploads/binary", requestOptions)
       .then(response => response.json())
       .then(result => setRequestResponse(JSON.stringify(result)))
       .catch(error => setRequestResponse(error));
@@ -60,7 +58,7 @@ function DisplayPictureScreen({ navigation, route }) {
         <Text style={styles.titleText}>{description}</Text>
       </View>
 
-      <Image style={styles.pictureFrameContainer} source={{ uri: capturedPicture }}>
+      <Image style={styles.pictureFrameContainer} source={{ uri: capturedPicture.uri }}>
       </Image>
 
       <TouchableWithoutFeedback onPress={makeRequest}>
@@ -128,7 +126,7 @@ const styles = StyleSheet.create({
   },
   pictureActionsContainer: {
     flex: 0.5,
-    marginVertical: 12,
+    marginTop: 12,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
