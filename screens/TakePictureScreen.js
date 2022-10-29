@@ -10,6 +10,7 @@ function TakePictureScreen({ navigation }) {
   const [cameraPermission, setcameraPermission] = useState(false);
   const [capturedPicture, setCapturedPicture] = useState(null);
   const [isCameraReady, setIsCameraReady] = useState(false);
+  const [cameraIsInPreview, setCameraIsInPreview] = useState(false);
 
   const isFocused = useIsFocused();
   const cameraRef = useRef();
@@ -23,6 +24,7 @@ function TakePictureScreen({ navigation }) {
   }, []);
 
   function toggleCameraType() {
+    if (cameraIsInPreview) return;
     setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
   }
 
@@ -36,13 +38,14 @@ function TakePictureScreen({ navigation }) {
   }
 
   async function takePicture() {
-    if (cameraRef.current) {
+    if (cameraRef.current && !cameraIsInPreview) {
       const options = { quality: 0.5, base64: true, skipProcessing: true };
       const data = await cameraRef.current.takePictureAsync(options);
       const source = data
       if (source) {
         setCapturedPicture(source);
         await cameraRef.current.pausePreview();
+        setCameraIsInPreview(true);
       }
     }
   }
@@ -50,6 +53,7 @@ function TakePictureScreen({ navigation }) {
   async function clearPicture() {
     setCapturedPicture(null);
     await cameraRef.current.resumePreview();
+    setCameraIsInPreview(false);
   }
 
   return (

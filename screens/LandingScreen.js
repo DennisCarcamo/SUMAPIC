@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     margin: 16,
     alignItems: 'center',
     justifyContent: 'center',
-    minWidth: '80%',
+    minWidth: '100%',
     minHeight: '10%',
     paddingVertical: 12,
     paddingHorizontal: 32,
@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontWeight: '700'
+    fontWeight: '700',
+    fontSize: 24,
   }
 });

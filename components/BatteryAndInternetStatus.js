@@ -62,7 +62,8 @@ const styles = StyleSheet.create({
         minWidth: '100%',
         flexDirection: 'column',
         justifyContent: 'space-evenly',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginBottom: 12,
     },
     label: {
         color: 'black',
