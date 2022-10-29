@@ -51,6 +51,10 @@ function DisplayPictureScreen({ navigation, route }) {
 
   }
 
+  function goToTakeScreen() {
+    navigation.navigate('Take');
+  }
+
   return (
     <View style={styles.screenContainer}>
       <BatteryAndInternetStatusComponent></BatteryAndInternetStatusComponent>
@@ -72,6 +76,9 @@ function DisplayPictureScreen({ navigation, route }) {
       </TouchableWithoutFeedback>
 
       <View style={styles.pictureActionsContainer}>
+        <Pressable style={styles.button} onPress={goToTakeScreen}>
+          <Text style={styles.buttonText}>Camera</Text>
+        </Pressable>
         {
           hideSave ?
             null :
@@ -89,12 +96,12 @@ export default DisplayPictureScreen;
 const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
-    backgroundColor: '#FFCDB2',
+    backgroundColor: '#f3e5f5',
     padding: 32,
   },
   titleContainer: {
     marginVertical: 12,
-    backgroundColor: '#B5838D',
+    backgroundColor: '#ba68c8',
     justifyContent: "center",
     alignItems: 'center'
   },
@@ -112,7 +119,7 @@ const styles = StyleSheet.create({
     color: '#EEEEEE'
   },
   scrollView: {
-    backgroundColor: '#B5838D',
+    backgroundColor: '#ba68c8',
     padding: 4,
   },
   pictureFrameContainer: {
@@ -122,13 +129,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 3,
     backgroundColor: '#8e24aa',
-    borderColor: 'black',
+    borderColor: '#ba68c8',
   },
   pictureActionsContainer: {
     flex: 0.5,
     marginTop: 12,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   buttonText: {
@@ -144,6 +151,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     borderRadius: 4,
     elevation: 3,
-    backgroundColor: '#6D6875',
+    backgroundColor: '#8e24aa',
   },
 });

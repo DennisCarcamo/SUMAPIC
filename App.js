@@ -14,16 +14,14 @@ import DisplayPictureScreen from './screens/DisplayPictureScreen';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-
   const appState = useRef(AppState.currentState);
-  const [appStateVisible, setAppStateVisible] = useState(appState.current);
-  const [notification, setNotification] = useState(false);
-
   const notificationListener = useRef();
   const responseListener = useRef();
 
+  const [appStateVisible, setAppStateVisible] = useState(appState.current);
+  const [notification, setNotification] = useState(false);
+
   useEffect(() => {
-    console.log('use effect 2');
     const subscription = AppState.addEventListener("change", _handleAppStateChange);
     return () => {
       subscription.remove();
@@ -31,17 +29,15 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    console.log('use effect 1');
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
       setNotification(notification);
     });
 
     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
+      return;
     });
 
     return () => {
-      console.log('use effect 3');
       Notifications.removeNotificationSubscription(notificationListener.current);
       Notifications.removeNotificationSubscription(responseListener.current);
     };
@@ -54,21 +50,17 @@ export default function App() {
         body: 'Come Back Please :)',
         data: {},
       },
-      trigger: { seconds: 2 },
+      trigger: { seconds: 10 },
     });
   }
 
-
-
   function _handleAppStateChange(nextAppState) {
     if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
-
+      return;
     }
-
     appState.current = nextAppState;
     setAppStateVisible(appState.current);
     triggerNotifications();
-    console.log('AppState', appState.current);
   };
 
   return (

@@ -125,6 +125,7 @@ const styles = StyleSheet.create({
   pictureActionsContainer: {
     flex: 0.5,
     marginTop: 0,
+    marginTop: 12,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
