@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, Pressable } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import BatteryAndInternetStatusComponent from '../components/BatteryAndInternetStatus';
 import * as ImagePicker from 'expo-image-picker';
 
@@ -21,45 +21,19 @@ function LandingScreen({ navigation }) {
 
   return (
     <>
-      <View style={styles.ScreenContainer}>
+      <View className={"container p-8 flex flex-1 flex-col justify-center bg-tertiary"}>
         <BatteryAndInternetStatusComponent></BatteryAndInternetStatusComponent>
-        <Pressable style={styles.button} onPress={goToTakePicture}>
-          <Text style={styles.buttonText}>Take New Picture</Text>
-        </Pressable>
-        <Pressable style={styles.button} onPress={loadPictureFromGalery}>
-          <Text style={styles.buttonText} >Load Picture From Galery</Text>
-        </Pressable>
+        <View>
+          <Pressable className={"bg-secondary flex flex-col justify-center items-center mt-12 h-20 rounded-lg"} onPress={goToTakePicture}>
+            <Text className={"text-onprimary text-base break-words py-4 font-medium"}>Take New Picture</Text>
+          </Pressable>
+          <Pressable className={"bg-secondary flex flex-col justify-center items-center mt-12 h-20 rounded-lg"} onPress={loadPictureFromGalery}>
+            <Text className={"text-onprimary text-base break-words py-4 font-medium"}>Load Picture From Galery</Text>
+          </Pressable>
+        </View>
       </View>
     </>
   );
 }
 
 export default LandingScreen;
-
-const styles = StyleSheet.create({
-  ScreenContainer: {
-    padding: 32,
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f3e5f5',
-  },
-  button: {
-    margin: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
-    minWidth: '100%',
-    minHeight: '10%',
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 4,
-    elevation: 3,
-    backgroundColor: '#8e24aa',
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: '700',
-    fontSize: 24,
-  }
-});

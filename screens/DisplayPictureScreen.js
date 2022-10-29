@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 function DisplayPictureScreen({ navigation, route }) {
 
   const [mediaLibraryPermission, setMediaLibraryPermission] = useState(false);
-  const [requestResponse, setRequestResponse] = useState('HOLA');
+  const [requestResponse, setRequestResponse] = useState('');
 
   const { capturedPicture, description, hideSave } = route.params;
 
@@ -56,34 +56,34 @@ function DisplayPictureScreen({ navigation, route }) {
   }
 
   return (
-    <View style={styles.screenContainer}>
+    <View className={"container flex-1 p-8 bg-tertiary"}>
       <BatteryAndInternetStatusComponent></BatteryAndInternetStatusComponent>
-      <View style={styles.titleContainer}>
-        <Text style={styles.titleText}>{description}</Text>
+      <View className={'bg-primary flex flex-row justify-center my-4 py-4'}>
+        <Text className={"text-onprimary text-xl font-bold break-words"}>{description}</Text>
       </View>
 
       <Image style={styles.pictureFrameContainer} source={{ uri: capturedPicture.uri }}>
       </Image>
 
-      <TouchableWithoutFeedback onPress={makeRequest}>
-        <SafeAreaView style={styles.container}>
-          <ScrollView style={styles.scrollView}>
-            <Text style={styles.requestText}>
-              {requestResponse}
-            </Text>
-          </ScrollView>
-        </SafeAreaView>
-      </TouchableWithoutFeedback>
 
-      <View style={styles.pictureActionsContainer}>
-        <Pressable style={styles.button} onPress={goToTakeScreen}>
-          <Text style={styles.buttonText}>Camera</Text>
+      <SafeAreaView className={"bg-background flex-1 my-4"}>
+        <ScrollView>
+          <Text className={"text-primary text-xl break-words font-medium p-4"}>
+            {requestResponse}
+          </Text>
+        </ScrollView>
+      </SafeAreaView>
+
+
+      <View className={"container flex-1 flex-row justify-between items-center"}>
+        <Pressable className={"bg-secondary flex-1 flex-col justify-center items-center  mr-1 h-10 rounded-lg"} onPress={goToTakeScreen}>
+          <Text className={"text-onprimary text-base break-words font-medium"}>Back to camera</Text>
         </Pressable>
         {
           hideSave ?
             null :
-            <Pressable style={styles.button} onPress={savePicture}>
-              <Text style={styles.buttonText}>Save Picture to Galery</Text>
+            <Pressable className={"bg-primary flex-1 flex-col justify-center items-center ml-1 h-10 rounded-lg"} onPress={savePicture}>
+              <Text className={"text-onprimary text-base break-words font-medium"}>Save Picture to Galery</Text>
             </Pressable>
         }
       </View>
@@ -94,42 +94,13 @@ function DisplayPictureScreen({ navigation, route }) {
 export default DisplayPictureScreen;
 
 const styles = StyleSheet.create({
-  screenContainer: {
-    flex: 1,
-    backgroundColor: '#f3e5f5',
-    padding: 32,
-  },
-  titleContainer: {
-    marginVertical: 12,
-    backgroundColor: '#ba68c8',
-    justifyContent: "center",
-    alignItems: 'center'
-  },
-  titleText: {
-    fontWeight: '800',
-    color: '#EEEEEE',
-    fontSize: 24
-  },
-  container: {
-    flex: 1,
-    paddingTop: StatusBar.currentHeight,
-  },
-  requestText: {
-    fontWeight: '700',
-    color: '#EEEEEE'
-  },
-  scrollView: {
-    backgroundColor: '#ba68c8',
-    padding: 4,
-  },
+
   pictureFrameContainer: {
     flex: 4,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 3,
-    backgroundColor: '#8e24aa',
-    borderColor: '#ba68c8',
+    backgroundColor: '#F7F2F3',
   },
   pictureActionsContainer: {
     flex: 0.5,
@@ -137,20 +108,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-  },
-  buttonText: {
-    color: '#EEEEEE',
-    fontWeight: '700'
-  },
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    Width: '20%',
-    Height: '20%',
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 4,
-    elevation: 3,
-    backgroundColor: '#8e24aa',
   },
 });

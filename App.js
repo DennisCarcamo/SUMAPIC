@@ -1,7 +1,4 @@
-import {
-  StyleSheet, AppState,
-  View, Text
-} from 'react-native';
+import { AppState } from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import * as Notifications from 'expo-notifications';
@@ -16,7 +13,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   const appState = useRef(AppState.currentState);
   const notificationListener = useRef();
-  const responseListener = useRef();
+
 
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
   const [notification, setNotification] = useState(false);
@@ -33,13 +30,9 @@ export default function App() {
       setNotification(notification);
     });
 
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      return;
-    });
-
     return () => {
       Notifications.removeNotificationSubscription(notificationListener.current);
-      Notifications.removeNotificationSubscription(responseListener.current);
+
     };
   }, []);
 
@@ -65,27 +58,14 @@ export default function App() {
 
   return (
     <>
-      <NavigationContainer styles={styles.container}>
-        <Stack.Navigator>
-          <Stack.Screen name='Home' component={LandingScreen}></Stack.Screen>
-          <Stack.Screen name='Take' component={TakePictureScreen}></Stack.Screen>
-          <Stack.Screen name='Display' component={DisplayPictureScreen}></Stack.Screen>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#653E42' }, headerTintColor: 'white', headerTitleStyle: { fontWeight: 'bold' } }}>
+          <Stack.Screen options={{ title: 'SUMAPIC' }} name='Home' component={LandingScreen}></Stack.Screen>
+          <Stack.Screen options={{ title: 'Take a picture' }} name='Take' component={TakePictureScreen}></Stack.Screen>
+          <Stack.Screen options={{ title: 'Show picture preview' }} name='Display' component={DisplayPictureScreen}></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
     </>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'black',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  label: {
-    color: 'black',
-    fontWeight: '700',
-    padding: 18,
-  }
-});

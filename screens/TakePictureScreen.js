@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
+import * as React from 'react';
 import { View, Text, StyleSheet, Pressable } from "react-native";
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused, useFocusEffect } from '@react-navigation/native';
 import { Camera, CameraType } from 'expo-camera';
 import BatteryAndInternetStatusComponent from "../components/BatteryAndInternetStatus";
 
@@ -14,6 +15,12 @@ function TakePictureScreen({ navigation }) {
 
   const isFocused = useIsFocused();
   const cameraRef = useRef();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setCapturedPicture(null);
+    }, [])
+  );
 
   useEffect(() => {
     async function getCammeraPermission() {
@@ -33,7 +40,7 @@ function TakePictureScreen({ navigation }) {
   };
 
   function goToDisplayPicture() {
-    setCapturedPicture(null);
+    setCameraIsInPreview(false);
     navigation.navigate('Display', { capturedPicture, description: 'Taken From Camera', hideSave: false });
   }
 
@@ -59,14 +66,14 @@ function TakePictureScreen({ navigation }) {
   return (
     <>
       {
-        isFocused && <View style={styles.screenContainer}>
-          <View style={styles.headingContainer}>
+        isFocused && <View className={"container p-8 flex flex-1 flex-col justify-center bg-tertiary"}>
+          <View className={"container flex flex-col justify-center grow"}>
             <BatteryAndInternetStatusComponent></BatteryAndInternetStatusComponent>
-            <View style={styles.headingCameraContainer}>
+            <View className={"container"}>
               {
                 capturedPicture != null
-                  ? <Pressable style={styles.button} onPress={clearPicture} >
-                    <Text style={styles.buttonText}>Clear</Text>
+                  ? <Pressable className={"bg-secondary flex flex-col justify-center items-center mt-3 h-10 rounded-lg"} onPress={clearPicture} >
+                    <Text className={"text-onprimary text-base break-words font-medium"}>Clear</Text>
                   </Pressable>
                   : null
 
@@ -76,17 +83,17 @@ function TakePictureScreen({ navigation }) {
           <Camera type={type} style={styles.pictureFrameContainer} ref={cameraRef} onCameraReady={onCameraReady} >
 
           </Camera>
-          <View style={styles.pictureActionsContainer}>
-            <Pressable style={styles.button} onPress={takePicture}>
-              <Text style={styles.buttonText}>Take Picture</Text>
+          <View className={"container flex-1 flex-row justify-between items-center"}>
+            <Pressable className={"bg-secondary flex-1 flex-col justify-center items-center mr-2 h-10 rounded-lg"} onPress={takePicture}>
+              <Text className={"text-onprimary text-base break-words font-medium"}>Take Picture</Text>
             </Pressable>
-            <Pressable style={styles.button} onPress={toggleCameraType}>
-              <Text style={styles.buttonText}>Flip</Text>
+            <Pressable className="bg-secondary flex-1 flex-col justify-center items-center  h-10 rounded-lg" onPress={toggleCameraType}>
+              <Text className={"text-onprimary text-base break-words font-medium"}>Flip</Text>
             </Pressable>
             {
               capturedPicture != null
-                ? <Pressable style={[styles.button, styles.actionButton]} disabled={capturedPicture == null} onPress={goToDisplayPicture}>
-                  <Text style={styles.buttonText}>Next</Text>
+                ? <Pressable className={"bg-primary flex-1 flex-col justify-center items-center ml-2 h-10 rounded-lg"} disabled={capturedPicture == null} onPress={goToDisplayPicture}>
+                  <Text className={"text-onprimary text-base break-words font-medium"}>Next</Text>
                 </Pressable>
                 : null
             }
@@ -100,22 +107,6 @@ function TakePictureScreen({ navigation }) {
 export default TakePictureScreen;
 
 const styles = StyleSheet.create({
-  screenContainer: {
-    flex: 1,
-    backgroundColor: '#f3e5f5',
-    padding: 32,
-  },
-  headingContainer: {
-    flex: 2,
-    flexDirection: "column",
-    justifyContent: 'space-between'
-  },
-  headingCameraContainer: {
-    flex: 0.80,
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
-    alignContent: 'center',
-  },
   pictureFrameContainer: {
     flex: 5,
     marginVertical: 12,
@@ -125,30 +116,5 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     backgroundColor: '#8e24aa',
     borderColor: '#5e35b1',
-  },
-  pictureActionsContainer: {
-    flex: 0.5,
-    marginTop: 0,
-    marginTop: 12,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: '700'
-  },
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 4,
-    elevation: 3,
-    backgroundColor: '#8e24aa',
-  },
-  actionButton: {
-    marginHorizontal: 4
   }
 });
