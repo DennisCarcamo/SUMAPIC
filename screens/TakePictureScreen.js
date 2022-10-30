@@ -48,7 +48,7 @@ function TakePictureScreen({ navigation }) {
     if (cameraRef.current && !cameraIsInPreview) {
       const options = { quality: 0.5, base64: true, skipProcessing: true };
       const data = await cameraRef.current.takePictureAsync(options);
-      const source = data
+      const source = data;
       if (source) {
         setCapturedPicture(source);
         await cameraRef.current.pausePreview();
@@ -67,12 +67,12 @@ function TakePictureScreen({ navigation }) {
     <>
       {
         isFocused && <View className={"container p-8 flex flex-1 flex-col justify-center bg-tertiary"}>
-          <View className={"container flex flex-col justify-center grow"}>
+          <View className={"container flex flex-col justify-center"}>
             <BatteryAndInternetStatusComponent></BatteryAndInternetStatusComponent>
-            <View className={"container"}>
+            <View className={"container h-10 mt-4"}>
               {
                 capturedPicture != null
-                  ? <Pressable className={"bg-secondary flex flex-col justify-center items-center mt-3 h-10 rounded-lg"} onPress={clearPicture} >
+                  ? <Pressable className={"bg-secondary flex flex-col justify-center h-10 items-center rounded-lg"} onPress={clearPicture} >
                     <Text className={"text-onprimary text-base break-words font-medium"}>Clear</Text>
                   </Pressable>
                   : null
